@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bice Vercelli — Engineering Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f8f5ff;--surface:rgba(255,255,255,0.88);--surface-s:rgba(255,255,255,0.65);
+  --border:rgba(130,80,240,0.18);--border-s:rgba(130,80,240,0.09);
+  --text:#150a28;--text2:#4a2e7a;--text3:#9070b8;
+  --accent:#6b1fd0;--accent2:#9b4dff;--accent-gl:rgba(107,31,208,0.08);
+  --tag-bg:rgba(107,31,208,0.08);--tag-text:#6b1fd0;
+  --sh:0 4px 32px rgba(107,31,208,0.10);--sh-h:0 14px 52px rgba(107,31,208,0.22);
+}
+[data-theme="dark"] {
+  --bg:#110820;--surface:rgba(32,16,56,0.96);--surface-s:rgba(24,10,44,0.88);
+  --border:rgba(180,130,255,0.28);--border-s:rgba(180,130,255,0.14);
+  --text:#f5eeff;--text2:#e0ccff;--text3:#a888d8;
+  --accent:#c49aff;--accent2:#ddb8ff;--accent-gl:rgba(180,130,255,0.14);
+  --tag-bg:rgba(180,130,255,0.16);--tag-text:#ddb8ff;
+  --sh:0 4px 32px rgba(0,0,0,0.60);--sh-h:0 14px 52px rgba(80,0,160,0.50);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.7;transition:background .4s,color .3s;overflow-x:hidden;}
+nav,.page,.site-footer{position:relative;z-index:1;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(224,210,255,.80);border-bottom:1px solid rgba(140,80,240,.20);backdrop-filter:blur(36px) saturate(180%);-webkit-backdrop-filter:blur(36px) saturate(180%);box-shadow:0 1px 40px rgba(110,30,220,.10);transition:background .3s;}
+[data-theme="dark"] nav{background:rgba(17,8,32,.96);border-bottom:1px solid rgba(180,130,255,.22);box-shadow:0 1px 40px rgba(0,0,0,.50);}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;}
+.nav-links{display:flex;align-items:center;gap:.2rem;}
+.nav-link{padding:.44rem .9rem;border-radius:8px;font-size:.875rem;font-weight:400;color:var(--text2);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;transition:color .2s,background .2s,box-shadow .2s;}
+.nav-link:hover{color:var(--accent);background:var(--accent-gl);}
+.nav-link.active{color:var(--accent);background:var(--accent-gl);box-shadow:0 0 0 1px var(--border);}
+.theme-icon-btn{width:38px;height:38px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface-s);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:color .2s,transform .15s,border-color .2s,background .2s;padding:0;backdrop-filter:blur(12px);}
+.theme-icon-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-gl);transform:scale(1.08);}
+.theme-icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.sun-icon{display:none;}.moon-icon{display:block;}
+[data-theme="dark"] .sun-icon{display:block;}[data-theme="dark"] .moon-icon{display:none;}
+.page{display:none;padding-top:62px;min-height:calc(100vh - 120px);}
+.page.active{display:block;animation:pgIn .38s ease both;}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.divider{border:none;border-top:1px solid var(--border-s);margin:0;}
+.btn{padding:.7rem 1.5rem;border-radius:10px;font-size:.875rem;font-weight:500;letter-spacing:.02em;cursor:pointer;text-decoration:none;border:1.5px solid transparent;transition:all .22s;display:inline-flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;}
+.btn-primary{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);color:#fff;border-color:transparent;box-shadow:0 2px 20px rgba(107,31,208,.38);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(107,31,208,.55);filter:brightness(1.08);}
+.btn-outline{background:var(--surface-s);color:var(--accent);border-color:var(--border);backdrop-filter:blur(12px);}
+.btn-outline:hover{border-color:var(--accent);background:var(--accent-gl);transform:translateY(-2px);box-shadow:var(--sh);}
+.btn-sm{padding:.45rem 1rem;font-size:.8rem;}
+.section-header{padding:3.5rem 0 2rem;}
+.s-label{font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;display:block;}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:300;color:var(--text);letter-spacing:-.01em;line-height:1.15;}
+.hero{padding:4.5rem 0 3.5rem;display:grid;grid-template-columns:280px 1fr;gap:4rem;align-items:start;}
+.hero-eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;display:block;}
+.hero-img-wrap{width:280px;flex-shrink:0;}
+.hero-img{width:280px;aspect-ratio:3/4;border-radius:18px;background:linear-gradient(145deg,rgba(180,90,255,.22) 0%,rgba(100,30,210,.15) 100%);border:1px solid var(--border);position:relative;overflow:hidden;box-shadow:0 8px 48px rgba(107,31,208,.20);}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:18px;}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3rem,5.5vw,5rem);font-weight:700;line-height:1.02;letter-spacing:-.01em;color:var(--text);margin-bottom:.5rem;}
+.hero-name em{font-style:italic;font-weight:400;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-prog{font-size:.95rem;color:var(--text2);margin-bottom:1.8rem;letter-spacing:.02em;}
+.hero-bio{font-size:1.02rem;color:var(--text2);line-height:1.8;max-width:520px;margin-bottom:2.5rem;}
+.hero-cta{display:flex;gap:.75rem;flex-wrap:wrap;}
+.card-subtitle{font-size:.78rem;color:var(--text3);font-style:italic;margin-bottom:.5rem;line-height:1.4;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem;padding-bottom:1.5rem;}
+.g-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;text-decoration:none;color:inherit;display:flex;flex-direction:column;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--sh);transition:all .26s;position:relative;}
+.g-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);z-index:1;}
+.g-card:hover{transform:translateY(-4px);box-shadow:var(--sh-h);border-color:rgba(155,77,255,.45);}
+.card-img{height:145px;position:relative;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,rgba(155,55,255,.18),rgba(80,18,210,.12));}
+.card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;display:block;background:white;}
+.card-img-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.2rem;}
+.card-img.t1{background:linear-gradient(135deg,rgba(160,50,255,.26),rgba(80,18,210,.18));}
+.card-img.t2{background:linear-gradient(135deg,rgba(100,35,230,.24),rgba(190,60,255,.20));}
+.card-img.t3{background:linear-gradient(135deg,rgba(200,55,230,.22),rgba(120,18,210,.24));}
+.card-body{padding:1.2rem 1.4rem 1.5rem;flex:1;display:flex;flex-direction:column;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:500;margin-bottom:.2rem;color:var(--text);line-height:1.25;}
+.card-desc{font-size:.865rem;color:var(--text2);line-height:1.65;flex:1;margin-bottom:.9rem;}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem;}
+.tag{font-size:.68rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:.22rem .58rem;border-radius:5px;background:var(--tag-bg);color:var(--tag-text);}
+.card-arrow{font-size:.8rem;color:var(--accent);display:flex;align-items:center;gap:.35rem;font-weight:500;transition:gap .2s;}
+.g-card:hover .card-arrow{gap:.6rem;}
+.past-link{display:inline-flex;align-items:center;gap:.5rem;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;color:var(--accent);padding:.5rem 0;border-bottom:1.5px solid var(--border);transition:gap .2s,border-color .2s;margin-bottom:2.5rem;}
+.past-link:hover{gap:.8rem;border-color:var(--accent);}
+.timeline{padding:.5rem 0 3.5rem;position:relative;}
+.timeline::before{content:'';position:absolute;left:110px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--accent) 0%,var(--border) 100%);opacity:.4;}
+.tl-item{display:flex;gap:0;padding:0 0 2.5rem;position:relative;align-items:flex-start;}
+.tl-year{min-width:110px;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--accent);padding-top:.2rem;font-weight:500;text-align:right;padding-right:1.8rem;flex-shrink:0;}
+.tl-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--accent);flex-shrink:0;margin-top:.4rem;margin-right:1.6rem;position:relative;z-index:1;}
+.tl-body{flex:1;}
+.tl-body h4{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:500;color:var(--text);margin-bottom:.25rem;line-height:1.3;}
+.tl-body p{font-size:.875rem;color:var(--text2);line-height:1.65;}
+.pg-intro{color:var(--text2);max-width:720px;line-height:1.8;padding-bottom:2.5rem;font-size:.96rem;}
+.pg-intro p{margin-bottom:1rem;}
+.pg-intro p:last-child{margin-bottom:0;}
+.position-ending{max-width:720px;margin-top:1.5rem;color:var(--text2);line-height:1.8;font-size:1rem;font-style:italic;}
+.position-gallery-wrap{padding-bottom:3.5rem;}
+.position-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem;}
+.position-gallery img{width:100%;height:260px;object-fit:cover;border-radius:16px;border:1px solid var(--border);box-shadow:var(--sh);display:block;background:var(--surface);}
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;padding-bottom:2rem;}
+.pos-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem 2rem 2.2rem;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--sh);transition:all .26s;position:relative;overflow:hidden;}
+.pos-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.62),transparent);}
+.pos-card:hover{transform:translateY(-3px);box-shadow:var(--sh-h);border-color:rgba(155,77,255,.45);}
+.pos-card.wide{grid-column:1/-1;}
+.pos-icon{font-size:1.5rem;margin-bottom:1.2rem;}
+.pos-card h3{font-family:'Cormorant Garamond',serif;font-size:1.38rem;font-weight:500;color:var(--text);margin-bottom:.7rem;}
+.pos-card p{font-size:.875rem;color:var(--text2);line-height:1.78;}
+.val-list{list-style:none;margin-top:.7rem;}
+.val-list li{padding:.48rem 0;border-bottom:1px solid var(--border-s);font-size:.875rem;color:var(--text2);display:flex;align-items:center;gap:.75rem;}
+.val-list li:last-child{border-bottom:none;}
+.val-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.proj-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--text3);cursor:pointer;border:none;background:none;padding:0;margin-bottom:2rem;transition:color .2s;font-family:'DM Sans',sans-serif;}
+.proj-back:hover{color:var(--accent);}
+.proj-hero-header{padding:2.5rem 0 0;}
+.proj-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.08;margin-bottom:.3rem;}
+.proj-subtitle{font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text3);font-style:italic;margin-bottom:1rem;}
+.proj-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+.proj-hero-img{width:100%;max-width:850px;aspect-ratio:16/7;border-radius:16px;background:linear-gradient(135deg,rgba(165,55,255,.24),rgba(80,18,210,.18));border:1px solid var(--border);position:relative;overflow:hidden;margin:0 auto 2rem;box-shadow:var(--sh);}
+.proj-hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;display:block;border-radius:16px;z-index:1;background:rgba(255,255,255,0.55);}
+.proj-hero-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;z-index:1;font-size:3.5rem;color:var(--accent);}
+.proj-img-lbl{font-size:.72rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
+.proj-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem 2rem;margin-bottom:3rem;backdrop-filter:blur(24px);box-shadow:var(--sh);}
+.pm-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:.35rem;font-weight:500;}
+.pm-val{font-size:.9rem;color:var(--text);font-weight:400;}
+.proj-sec{margin-bottom:3rem;}
+.proj-sec h3{font-family:'Cormorant Garamond',serif;font-size:1.48rem;font-weight:500;color:var(--text);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border-s);}
+.proj-sec p{color:var(--text2);line-height:1.82;margin-bottom:.75rem;font-size:.925rem;}
+.proj-sec ul{margin-top:.6rem;margin-left:1.2rem;padding-left:.5rem;color:var(--text2);}
+.proj-sec li{margin-bottom:.4rem;line-height:1.6;}
+.proj-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;margin-bottom:1.5rem;}
+.proj-split.text-wide{grid-template-columns:1.4fr 1fr;}
+.proj-split-img,.proj-img-box,.ctmf-img-slot,.bridge-gallery-img,.bridge-iter-img{width:100%;aspect-ratio:4/3;border-radius:12px;background:linear-gradient(135deg,rgba(155,55,255,.18),rgba(80,18,210,.12));border:1px solid var(--border);position:relative;overflow:hidden;box-shadow:var(--sh);}
+.proj-split-img img,.proj-img-box img,.ctmf-img-slot img,.bridge-gallery-img img,.bridge-iter-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;border-radius:12px;display:block;background:rgba(255,255,255,0.6);}
+.proj-split-img-ph,.proj-img-box-ph,.ctmf-img-slot-ph,.bridge-gallery-ph,.bridge-iter-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:1rem;text-align:center;}
+.proj-split-img-lbl,.proj-img-box-lbl,.ctmf-img-slot-lbl,.bridge-gallery-lbl,.bridge-iter-lbl{font-size:.68rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;}
+.proj-img-row,.bridge-img-row{display:grid;gap:1rem;margin:1rem 0 1.5rem;}
+.proj-img-row.cols-2,.bridge-img-row.cols-2{grid-template-columns:1fr 1fr;}
+.proj-img-row.cols-3,.bridge-img-row.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.proj-caption{margin-top:.65rem;font-size:.8rem;line-height:1.55;color:var(--text3);text-align:center;}
+.proj-fig{display:flex;flex-direction:column;}
+.proj-fig.large{max-width:400px;width:100%;margin:1.5rem auto 0;}
+.proj-fig.large .proj-img-box{aspect-ratio:16/9;min-height:520px;}
+.proj-constraint-list{list-style:none;margin:.5rem 0 1rem;}
+.proj-constraint-list li{padding:.55rem .9rem;margin-bottom:.45rem;border-left:3px solid var(--accent);background:var(--accent-gl);border-radius:0 8px 8px 0;font-size:.875rem;color:var(--text2);line-height:1.55;}
+.proj-stakeholder-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.75rem 0;}
+.proj-stakeholder-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.4rem;box-shadow:var(--sh);}
+.proj-stakeholder-card h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--accent);margin-bottom:.5rem;}
+.proj-stakeholder-card p{font-size:.85rem;color:var(--text2);line-height:1.65;margin:0;}
+.proj-concept-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.5rem 0 1rem;}
+.proj-concept-list li{padding:.5rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:.875rem;color:var(--text2);display:flex;align-items:center;gap:.6rem;}
+.proj-concept-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.proj-iterations{display:flex;flex-direction:column;gap:.6rem;margin:.75rem 0 1rem;}
+.iter-row{display:flex;align-items:center;gap:1rem;padding:.75rem 1.1rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh);}
+.iter-badge{font-size:1.1rem;flex-shrink:0;}
+.iter-material{font-weight:500;font-size:.9rem;color:var(--text);min-width:180px;}
+.iter-result{font-size:.85rem;color:var(--text2);flex:1;}
+.iter-pass{border-left:3px solid #22c55e;}
+.iter-fail{border-left:3px solid #ef4444;}
+.proj-reflection-quote,.bridge-reflection-quote{border-left:3px solid var(--accent);padding:.75rem 1.2rem;margin:.75rem 0 1rem;background:var(--accent-gl);border-radius:0 10px 10px 0;}
+.proj-reflection-quote p,.bridge-reflection-quote p{font-size:.925rem;color:var(--text2);line-height:1.8;font-style:italic;margin:0;}
+.ctmf-page-section{margin-bottom:4rem;}
+.ctmf-page-grid{display:flex;flex-direction:column;gap:1.5rem;}
+.ctmf-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem 2rem;backdrop-filter:blur(20px);box-shadow:var(--sh);position:relative;overflow:hidden;}
+.ctmf-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);}
+.ctmf-box-label{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;display:block;}
+.ctmf-box-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--text);margin-bottom:.35rem;}
+.ctmf-box-body{display:grid;grid-template-columns:1.35fr 1fr;gap:1.5rem;align-items:start;}
+.ctmf-box-text p{font-size:.9rem;color:var(--text2);line-height:1.78;margin-bottom:.65rem;}
+.ctmf-box-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;}
+#page-ctmfs .container{max-width:1300px;}
+.ctmf-img-slot{min-height:260px;}
+.site-footer{border-top:1px solid var(--border-s);padding:2rem 0;margin-top:2rem;}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.footer-copy{font-size:.8rem;color:var(--text3);}
+.footer-btns{display:flex;gap:.65rem;}
+.proj-docs{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.proj-doc-btn{display:flex;align-items:center;gap:.9rem;padding:1rem 1.4rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;box-shadow:var(--sh);transition:all .22s;min-width:200px;}
+.proj-doc-btn:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--sh-h);}
+.proj-doc-icon{font-size:1.6rem;flex-shrink:0;}
+.proj-doc-label{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--text);display:block;line-height:1.2;}
+.proj-doc-hint{font-size:.75rem;color:var(--accent);display:block;margin-top:.15rem;}
+.pdf-viewer-wrap{padding:2rem 0 4rem;}
+.pdf-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--text3);cursor:pointer;border:none;background:none;padding:0;margin-bottom:2rem;transition:color .2s;font-family:'DM Sans',sans-serif;}
+.pdf-back:hover{color:var(--accent);}
+.pdf-frame{width:100%;height:80vh;border-radius:14px;border:1px solid var(--border);box-shadow:var(--sh);background:var(--surface);}
+.bridge-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem 2rem;margin-bottom:3rem;backdrop-filter:blur(24px);box-shadow:var(--sh);}
+.bridge-sec{margin-bottom:3rem;}
+.bridge-sec h3{font-family:'Cormorant Garamond',serif;font-size:1.48rem;font-weight:500;color:var(--text);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border-s);}
+.bridge-sec p{color:var(--text2);line-height:1.82;margin-bottom:.75rem;font-size:.925rem;}
+.bridge-obj-list{list-style:none;margin:.5rem 0 1rem;}
+.bridge-obj-list li{padding:.5rem .9rem;margin-bottom:.45rem;border-left:3px solid var(--accent);background:var(--accent-gl);border-radius:0 8px 8px 0;font-size:.875rem;color:var(--text2);line-height:1.55;}
+.bridge-iterations{display:flex;flex-direction:column;gap:1rem;margin:1rem 0 1.5rem;}
+.bridge-iter{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh);}
+.bridge-iter-head{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;border-bottom:1px solid var(--border-s);}
+.bridge-iter-num{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-gl);padding:.25rem .7rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.bridge-iter-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--text);}
+.bridge-iter-body{padding:.9rem 1.25rem;}
+.bridge-iter-body ul{list-style:none;margin-bottom:.5rem;}
+.bridge-iter-body ul li{padding:.28rem 0;font-size:.875rem;color:var(--text2);display:flex;align-items:flex-start;gap:.65rem;}
+.bridge-iter-body ul li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:.55rem;}
+.bridge-result{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:500;padding:.3rem .8rem;border-radius:6px;margin-top:.4rem;}
+.bridge-result.pass{background:rgba(34,197,94,.12);color:#16a34a;border:1px solid rgba(34,197,94,.25);}
+.bridge-result.warn{background:rgba(234,179,8,.12);color:#b45309;border:1px solid rgba(234,179,8,.25);}
+.bridge-result.fail{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.25);}
+.bridge-perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 1.5rem;}
+.bridge-perf-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.4rem;box-shadow:var(--sh);}
+.bridge-perf-card h4{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--accent);margin-bottom:.5rem;}
+.bridge-perf-card ul{list-style:none;}
+.bridge-perf-card ul li{padding:.28rem 0;font-size:.875rem;color:var(--text2);display:flex;align-items:flex-start;gap:.65rem;border-bottom:1px solid var(--border-s);}
+.bridge-perf-card ul li:last-child{border-bottom:none;}
+.bridge-perf-card ul li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:.55rem;}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;gap:2rem;}
+  .hero-img-wrap{width:100%;max-width:260px;margin:0 auto;}
+  .hero-img{width:100%;}
+  .pos-grid,.proj-meta,.bridge-meta,.bridge-perf-grid,.proj-split,.proj-stakeholder-grid,.proj-concept-list,.ctmf-box-body,.ctmf-box-imgs,.position-gallery,.proj-img-row.cols-2,.proj-img-row.cols-3,.bridge-img-row.cols-2,.bridge-img-row.cols-3{grid-template-columns:1fr;}
+  .position-gallery img{height:240px;}
+  .footer-inner{flex-direction:column;align-items:flex-start;}
+  .page{min-height:auto;}
+  .edu-references{
+  margin-top: 2rem;
+}
+
+.edu-ref-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.edu-ref-list li{
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.6);
+}
+
+.edu-ref-list a{
+  text-decoration: none;
+  font-weight: 500;
+}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-links">
+      <button class="nav-link active" id="nl-home" onclick="go('home')">Home</button>
+      <button class="nav-link" id="nl-position" onclick="go('position')">My Position</button>
+      <button class="nav-link" id="nl-projects" onclick="go('projects')">Projects</button>
+      <button class="nav-link" id="nl-ctmfs" onclick="go('ctmfs')">CTMFs</button>
+    </div>
+    <button class="theme-icon-btn" onclick="toggleTheme()" title="Toggle dark/light" aria-label="Toggle theme">
+      <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/></svg>
+      <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page active" id="page-home">
+  <div class="container">
+    <section class="hero">
+      <div class="hero-img-wrap">
+        <div class="hero-img"><img src="Bice_picture.jpeg" alt="Bice Vercelli"></div>
+      </div>
+      <div>
+        <span class="hero-eyebrow">Engineering Portfolio</span>
+        <h1 class="hero-name">Bice<br><em>Vercelli</em></h1>
+        <div class="hero-prog">Engineering Science · University of Toronto</div>
+        <p class="hero-bio">I'm a first-year Engineering Science student with a genuine curiosity for how systems — technical, social, and structural — interact and evolve. I approach problems with both rigour and creativity, finding that the most impactful solutions sit at the intersection of analytical thinking and human-centred design.</p>
+        <div class="hero-cta">
+          <button class="btn btn-outline" onclick="go('projects')">View Projects →</button>
+          <button class="btn btn-outline" onclick="go('position')">My Position</button>
+        </div>
+      </div>
+    </section>
+    <hr class="divider">
+    <div class="section-header">
+      <span class="s-label">Current Work</span>
+      <h2 class="s-title">Current Projects</h2>
+    </div>
+    <div class="cards-grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr));">
+      <a class="g-card" onclick="showProject('praxis2','home')">
+        <div class="card-img t3">
+        <img src="Praxis2_CAD.jpeg" alt="Praxis II Project">
+        </div>
+        <div class="card-body">
+          <div class="card-title">Praxis II Project</div>
+          <div class="card-subtitle">SnapBuddy: Automated Wristband Application System</div>
+          <p class="card-desc">Designing a system to automate wristband application for field trips.</p>
+          <div class="tags"><span class="tag">Systems</span><span class="tag">Integration</span><span class="tag">Testing</span></div>
+          <div class="card-arrow">View Project <span>→</span></div>
+        </div>
+      </a>
+    </div>
+    <button class="past-link" onclick="go('projects')">See past projects →</button>
+    <hr class="divider">
+    <div class="section-header">
+      <span class="s-label">Background</span>
+      <h2 class="s-title">Education</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2024–<br>Present</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>University of Toronto — Engineering Science</h4>
+          <p>Bachelor of Applied Science (B.A.Sc.) · Aspiring Aerospace Engineering Major. Advanced Engineering Mathematics, Sciences and Multidisciplinary Design.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020–2024</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <h4>College Du Leman- Geneva</h4>
+          <p>International Baccalaureate (IB) Diploma · Higher Level Subjects in Mathematics: Analysis and Approaches (AA), Physics, and Economics. </p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="edu-references">
+    <h3 class="s-subtitle">Relevant Coursework & Documents</h3>
+    <ul class="edu-ref-list">
+    <li>
+      <strong>Praxis I – ESC101:</strong>
+      Introduction to engineering design, problem framing, and process analysis.
+      [<a href="The Wobble Dilemma Report.pdf" target="_blank">Design Brief</a>]
+    </li>
+
+    <li>
+      <strong>Praxis II – ESC102:</strong>
+      Systems-level design, prototyping, and testing through team-based projects.
+      [<a href="FINAL RFP.pdf" target="_blank">Request for Proposal (RFP)</a>]
+    </li>
+
+    <li>
+      <strong>CIV102 – Structures and Materials:</strong>
+      Structural analysis, material behavior, and bridge design.
+      [<a href="CIV102 Project Team 409 Design Report.pdf" target="_blank">Design Report</a>]
+      [<a href="CIV102 Project Team 409 Engineering Assembly.pdf" target="_blank">Engineering Assembly</a>]
+    </li>
+    </ul>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-position">
+  <div class="container">
+    <div class="section-header">
+      <span class="s-label">Who I Am</span>
+      <h1 class="s-title">My Position</h1>
+    </div>
+    <div class="pg-intro">
+      <p>I grew up moving between countries, constantly adapting to new environments, cultures, and ways of thinking. This experience shaped how I engage with the world: by observing before acting, questioning assumptions, and recognizing that any problem can be interpreted in multiple ways depending on perspective. It has made me comfortable working in uncertainty and attentive to context, both of which are essential in engineering design.</p>
+      <p>Alongside this, ballet has been a defining part of my life. Through it, I developed discipline, precision, and an acute awareness of how individual movements contribute to a larger system. Every action in ballet requires balance, timing, and coordination, where success depends not on isolated steps, but on how they connect and flow together. This perspective carries directly into how I approach engineering, as the design of interconnected systems where performance emerges from the relationships between components.</p>
+      <p>In my design work, I approach problems step-by-step, by first understanding their context, identifying stakeholders, constraints, and the conditions under which a system must operate. I focus on framing the problem carefully, recognizing that the way a problem is defined determines the direction and quality of its solution. For example, in our wristband applicator project, framing the problem around staff workload and child interaction, rather than just speed, shifted the design toward a system that balanced efficiency with safety and usability. From there, I explore a wide range of possibilities before narrowing down options using clear criteria and evidence.</p>
+      <p>Looking forward, I am drawn to aerospace engineering and space exploration, fields that demand both precision and the ability to work within complex, interconnected systems. In many ways, this reflects what first drew me to ballet. Just as a performance relies on coordination, timing, and the seamless integration of individual movements, aerospace systems require careful alignment of multiple components working together under strict constraints. Small errors can propagate through an entire system, making attention to detail and system awareness essential.</p>
+      <p>My curiosity drives me toward questions that extend beyond immediate problems, how we can understand environments beyond Earth, how we can identify habitable exoplanets, and how engineering can expand what is possible. At the same time, this curiosity is grounded in a sense of responsibility. Engineering decisions carry consequences, and working in fields such as aerospace requires consideration not only of technical success but of long-term impact and sustainability.</p>
+      <p>Collaboration is central to both my background and my future goals. In ballet, no performance exists in isolation; it depends on trust, communication, and awareness of others. I approach engineering in the same way, valuing diverse perspectives and working with others to build solutions that are stronger than any individual contribution.</p>
+    </div>
+    <div class="pos-grid">
+      <div class="pos-card">
+        <div class="pos-icon">⚖️</div>
+        <h3>Core Values</h3>
+        <ul class="val-list">
+          <li>Rigour — I shifted from relying on intuition to evaluating ideas using measurable criteria such as efficiency and safety.</li>
+          <li>Responsibility — I now consider the real-world impact of engineering decisions on users and systems.</li>
+          <li>Collaboration — I shifted from sharing ideas to actively integrating feedback into design decisions.</li>
+          <li>Curiosity — I learned to question the problem itself rather than immediately solving it.</li>
+        </ul>
+      </div>
+      <div class="pos-card wide">
+        <div class="pos-icon">🔭</div>
+        <h3>Vision</h3>
+        <p>I want to work on problems that genuinely matter, challenges at the intersection of technology, society, and sustainability. I am drawn to systems that shape how people live, work, and connect, and I believe engineers have a unique ability and obligation to contribute to these spaces. I am particularly interested in space exploration, not only as a technical challenge but as an opportunity to advance society in a responsible and sustainable way.</p>
+        <p>In the long run, I hope to build expertise that bridges the technical and the human, not as someone who knows a little of everything, but as someone who can navigate complexity with both precision and empathy.</p>
+        <p>My vision is to contribute to work that lasts: infrastructure, systems, or ideas that outlive the project.</p>
+      </div>
+    </div>
+    <p class="position-ending">My approach is shaped by a fusion of critical thought, core values, and a commitment to global impact. Nobel laureate Elie Wiesel once wrote that “there is divine beauty in learning,” a sentiment that defines my practice.</p>
+    <p class="position-ending" style="margin-bottom:2rem;">For me, engineering is where these ideas converge, with precision, curiosity, responsibility, and collaboration, allowing me to design systems that are not only technically sound but thoughtfully integrated within a broader context.</p>
+    <div style="padding-bottom:3rem;padding-top:1rem;">
+      <button class="btn btn-outline" onclick="go('pdf')">📄 View My Full Position Statement V1 →</button>
+    </div>
+    <div class="position-gallery-wrap">
+      <div class="section-header" style="padding:1rem 0 1.2rem;">
+        <span class="s-label">Visual Reflection</span>
+        <h2 class="s-title">Images That Shaped My Position</h2>
+      </div>
+      <div class="position-gallery">
+        <img src="ballet_photo.JPG" alt="Ballet experience">
+        <img src="IMG_3187 1.jpeg" alt="Collaboration">
+        <img src="IMG_4371.JPG" alt="Friendship">
+        <img src="space.jpeg" alt="Space">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-pdf">
+  <div class="container pdf-viewer-wrap">
+    <button class="pdf-back" onclick="go('position')">← Back to My Position</button>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;margin-bottom:1.5rem;color:var(--text);">Position Statement</h2>
+    <iframe class="pdf-frame" src="Bice_vercelli_PS_old.pdf" title="Position Statement"></iframe>
+  </div>
+</div>
+
+<div class="page" id="page-projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="s-label">My Work</span>
+      <h1 class="s-title">Projects</h1>
+    </div>
+    <p class="pg-intro">A collection of engineering and design projects from my time in Engineering Science.</p>
+    <div class="cards-grid">
+      <a class="g-card" onclick="showProject('praxis1','projects')">
+        <div class="card-img t1"><img src="P1_force.jpeg" alt="Praxis I"></div>
+        <div class="card-body">
+          <div class="card-title">Praxis I Project</div>
+          <div class="card-subtitle">The Wobble Dilemma: Rethinking Convertible Laptop Hinges</div>
+          <p class="card-desc">Designing a hinge add-on to improve stability during stylus use.</p>
+          <div class="tags"><span class="tag">Human</span><span class="tag">Context</span><span class="tag">Framing</span></div>
+          <div class="card-arrow">View Project <span>→</span></div>
+        </div>
+      </a>
+      <a class="g-card" onclick="go('bridge')">
+        <div class="card-img t2"><img src="civ_final.jpeg" alt="CIV Bridge"></div>
+        <div class="card-body">
+          <div class="card-title">CIV Bridge Project</div>
+          <p class="card-desc">Designing a bridge to maximize load capacity under material constraints.</p>
+          <div class="tags"><span class="tag">Structures</span><span class="tag">Analysis</span><span class="tag">Optimization</span></div>
+          <div class="card-arrow">View Project <span>→</span></div>
+        </div>
+      </a>
+      <a class="g-card" onclick="showProject('praxis2','projects')">
+        <div class="card-img t3"><img src="Praxis2_CAD.jpeg" alt="Praxis II"></div>
+        <div class="card-body">
+          <div class="card-title">Praxis II Project</div>
+          <div class="card-subtitle">SnapBuddy: Automated Wristband Application System</div>
+          <p class="card-desc">Designing a system to automate wristband application for field trips.</p>
+          <div class="tags"><span class="tag">Systems</span><span class="tag">Integration</span><span class="tag">Testing</span></div>
+          <div class="card-arrow">View Project <span>→</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-project">
+  <div class="container">
+    <div class="proj-hero-header">
+      <button class="proj-back" id="proj-back-btn" onclick="goBack()">← Back to Projects</button>
+      <div class="proj-tags" id="proj-tags"></div>
+      <h1 class="proj-title" id="proj-title">—</h1>
+      <div class="proj-subtitle" id="proj-subtitle"></div>
+    </div>
+    <div class="proj-hero-img" id="proj-hero-img"><div class="proj-hero-ph" id="proj-icon">🏗️</div></div>
+    <div class="proj-meta">
+      <div><div class="pm-label">Role</div><div class="pm-val" id="pm-role">—</div></div>
+      <div><div class="pm-label">Year</div><div class="pm-val" id="pm-year">—</div></div>
+      <div><div class="pm-label">Duration</div><div class="pm-val" id="pm-dur">—</div></div>
+      <div><div class="pm-label">Context</div><div class="pm-val" id="pm-ctx">—</div></div>
+    </div>
+    <div id="proj-content"></div>
+    <div style="padding-bottom:4rem;"></div>
+  </div>
+</div>
+
+<div class="page" id="page-bridge">
+  <div class="container">
+    <div class="proj-hero-header">
+      <button class="proj-back" onclick="go('projects')">← Back to Projects</button>
+      <div class="proj-tags" style="margin-bottom:.75rem;">
+        <span class="tag">Structures</span><span class="tag">Analysis</span><span class="tag">Optimization</span>
+      </div>
+      <h1 class="proj-title">CIV Bridge Project</h1>
+      <div class="proj-subtitle">Bridge Baddies: Shooting for the Stars</div>
+    </div>
+    <div class="proj-hero-img"><img src="civ_final.jpeg" alt="CIV Bridge final"></div>
+    <div class="bridge-meta">
+      <div><div class="pm-label">Role</div><div class="pm-val">Design Team Member</div></div>
+      <div><div class="pm-label">Year</div><div class="pm-val">2025</div></div>
+      <div><div class="pm-label">Context</div><div class="pm-val">CIV102 Structural Design Project</div></div>
+    </div>
+    <div class="bridge-sec">
+      <h3>Overview</h3>
+      <p>The goal of this project was to design and construct a matboard bridge capable of supporting the maximum possible load while remaining within strict material constraints.</p>
+      <p>The design was evaluated under two loading cases, with performance measured through failure load and factor of safety (FOS). This project emphasized analytical modeling, iterative optimization, and real-world construction limitations.</p>
+      <div class="bridge-img-row cols-3">
+        <div class="bridge-gallery-img"><img src="civD1.jpeg" alt="CIV drawing 1"></div>
+        <div class="bridge-gallery-img"><img src="civD2.jpeg" alt="CIV drawing 2"></div>
+        <div class="bridge-gallery-img"><img src="civD3.jpg" alt="CIV drawing 3"></div>
+      </div>
+      <p class="proj-caption">Above are the hand darwings of the <strong>Top view</strong>, the <strong>Cross Section </strong>, and <strong>matboard drawing</strong>.</p>
+    </div>
+    <div class="bridge-sec">
+      <h3>Design Objective &amp; Constraints</h3>
+      <ul class="bridge-obj-list">
+        <li>Maximize failure load</li>
+        <li>Optimize strength-to-weight ratio</li>
+        <li>Follow Load Case 1 and Load Case 2 conditions</li>
+        <li>Limited matboard material</li>
+        <li>Account for buckling, shear, and flexural failure modes</li>
+      </ul>
+    </div>
+    <div class="bridge-sec">
+      <h3>Technical Approach</h3>
+      <p>The design process was driven by structural analysis and quantitative evaluation. We used shear force and bending moment diagrams, second moment of area, stress calculations, and factor of safety analysis across multiple failure modes. A Python-based model was used to compute internal forces, identify maximum stress regions, and evaluate failure conditions across the bridge.</p>
+    </div>
+    <div class="bridge-sec">
+      <h3>Iterative Design Process</h3>
+      <p>The final bridge emerged through six major iterations, each targeting a specific failure mode.</p>
+      <div class="bridge-img-row cols-2">
+        <div class="bridge-iter-img"><img src="civ_it1.jpeg" alt="CIV iteration image 1"></div>
+        <div class="bridge-iter-img"><img src="civ_it2.jpeg" alt="CIV iteration image 2"></div>
+      </div>
+      <div class="bridge-iterations">
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Design 0</span><div class="bridge-iter-title">Initial Baseline</div></div><div class="bridge-iter-body"><p>Initial analysis revealed that main flange buckling was the limiting failure mode, with a factor of safety below 1.</p><div class="bridge-result fail">❌ Insight: the design would fail prematurely under compression</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 1</span><div class="bridge-iter-title">Double Top Layer</div></div><div class="bridge-iter-body"><ul><li>Increased thickness of top deck</li><li>Improved buckling resistance</li></ul><div class="bridge-result pass">✅ FOS increased significantly: 0.596 → 3.417</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 2</span><div class="bridge-iter-title">Increase Web Height</div></div><div class="bridge-iter-body"><ul><li>Increased web height from 75 mm to 90 mm</li></ul><div class="bridge-result warn">⚠️ Improved moment of inertia, but not enough improvement in FOS</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 3</span><div class="bridge-iter-title">Variable Web Height</div></div><div class="bridge-iter-body"><ul><li>Increased height near midspan where bending moment is highest</li></ul><div class="bridge-result pass">✅ Improved flexural performance</div><div class="bridge-result warn">⚠️ Caused shear buckling issues</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 4</span><div class="bridge-iter-title">Add Diaphragms</div></div><div class="bridge-iter-body"><ul><li>Increased number of diaphragms</li><li>Optimized spacing</li></ul><div class="bridge-result pass">✅ Significantly improved shear buckling resistance</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 5</span><div class="bridge-iter-title">Material Optimization</div></div><div class="bridge-iter-body"><ul><li>Removed bottom flange in low-stress regions</li></ul><div class="bridge-result pass">✅ Saved material without reducing performance</div></div></div>
+        <div class="bridge-iter"><div class="bridge-iter-head"><span class="bridge-iter-num">Iteration 6</span><div class="bridge-iter-title">Reinforce Midspan</div></div><div class="bridge-iter-body"><ul><li>Added double bottom layer at center</li></ul><div class="bridge-result pass">✅ Improved flexural compression capacity</div></div></div>
+      </div>
+    </div>
+    <div class="bridge-sec">
+      <h3>Final Design</h3>
+      <div class="bridge-perf-grid">
+        <div class="bridge-perf-card"><h4>Predicted Results</h4><ul><li>Predicted failure load: ~1358 N</li><li>Actual failure load: ~600 N</li><li>Governing failure mode: flexural compression</li></ul></div>
+        <div class="bridge-perf-card"><h4>Final Design Balanced</h4><ul><li>Buckling resistance</li><li>Material efficiency</li><li>Structural stability</li></ul></div>
+      </div>
+      <div class="proj-hero-img"><img src="civ_cad.jpeg" alt="Final bridge CAD"></div>
+      <p>Although the theoretical model predicted high performance, real-world factors reduced expected capacity to ~40%.</p>
+    </div>
+    <div class="bridge-sec">
+      <h3>Reflection</h3>
+      <div class="bridge-reflection-quote"><p>This project strengthened my understanding of engineering as a process driven by analysis, iteration, and trade-offs. One of the most important insights was that improving one aspect of a system often introduces new weaknesses. For example, increasing web height improved bending resistance but reduced shear buckling capacity. This highlighted the importance of evaluating designs across multiple interacting failure modes, rather than optimizing for a single metric.</p></div>
+      <div class="bridge-reflection-quote"><p>I also developed a deeper appreciation for the gap between theoretical models and real-world performance. While calculations assumed ideal conditions, construction introduced variability through material imperfections, glue application, and alignment errors. This reinforced that engineering solutions must account for practical limitations, not just theoretical predictions.</p></div>
+    </div>
+    <div style="padding-bottom:4rem;"></div>
+  </div>
+</div>
+
+<div class="page" id="page-ctmfs">
+  <div class="container">
+    <div class="section-header">
+      <span class="s-label">Frameworks and Methods</span>
+      <h1 class="s-title">CTMFs</h1>
+    </div>
+    <p class="pg-intro">This page collects the most relevant CTMFs from Praxis I, Praxis II, and my CIV bridge project.</p>
+
+    <div class="ctmf-page-section">
+      <span class="s-label">Project 01</span>
+      <h2 class="s-title">Praxis I</h2>
+      <div class="ctmf-page-grid">
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 1</span>
+          <div class="ctmf-box-title">Pugh Chart</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>The Pugh Chart played a central role in how design decisions were made throughout the hinge add-on project. Rather than selecting a concept based on intuition or initial preference, this tool provided a structured way to evaluate multiple design directions against a consistent set of criteria.</p>
+              <p>In the early stages of convergence, our team had generated several viable hinge concepts that addressed the issue of stylus-induced screen wobble. However, these concepts varied significantly in terms of stability, portability, manufacturability, efficiency, and integration with existing laptop geometry. At this point, the challenge was not generating ideas, but determining which concept best aligned with the project’s goals.</p>
+              <p>To address this, we used Pugh Charts to evaluate each prototype idea against the requirements. Each concept was compared against a baseline design and scored relative to criteria such as structural rigidity, closed volume, weight, and the time and steps required to attach it to the user’s computer.</p>
+              <p>What became immediately clear through this process was that concepts which initially seemed promising did not perform consistently across all criteria. For example, one design I particularly liked, the Bice Chair, which I thought would perform the best given its structural stability, introduced issues with portability and user interaction, making it less viable in practice. The Pugh Chart exposed these trade-offs in a way that was not immediately visible during ideation.</p>
+              <p>This tool shifted my understanding of decision-making in engineering design. I realized that selecting a “good” design is not about finding a perfect solution, but about navigating trade-offs in a structured and transparent way. It also emphasized the importance of having clearly defined criteria before evaluation, as the quality of the outcome depends heavily on how well those criteria reflect the problem.</p>
+              <p>Moving forward, I would refine how I use Pugh Charts by ensuring that criteria are not only comprehensive, but also weighted appropriately, as some factors, such as structural stability, should have had greater influence on the final decision.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="P1_PC.jpeg" alt="Praxis I Pugh image 1"></div>
+              <div class="ctmf-img-slot"><img src="P1_PC2.jpeg" alt="Praxis I Pugh image 2"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 2</span>
+          <div class="ctmf-box-title">Toulmin Argument</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>The Toulmin Argument framework influenced how I justified design decisions and communicated reasoning throughout the project. Rather than presenting ideas as standalone claims, this structure encouraged me to support decisions with clear evidence and logical justification.</p>
+              <p>During the development of the hinge system, multiple design choices required justification, particularly when selecting between competing concepts or defending modifications. For instance, when evaluating whether to prioritize increased rigidity over portability, it was necessary to clearly articulate not only the chosen direction, but why that decision was valid.</p>
+              <p>Using Toulmin reasoning, I structured arguments by identifying a claim (e.g., a specific hinge configuration improves stability), supporting it with evidence (simulation results, observations from prototypes, or relevant research), and linking it through reasoning that explained why the evidence supported the claim. This approach made it easier to identify gaps in logic or unsupported assumptions.</p>
+              <p>One key observation was that initial design discussions often relied on implicit reasoning. By explicitly structuring arguments, weaknesses became more visible. For example, a claim that a design was “more stable” required measurable evidence, such as reduced deflection or improved resistance to applied forces. Without this, the claim remained subjective, and could end up to being true.</p>
+              <p>This framework strengthened both individual and team-level decision-making. It encouraged more rigorous thinking and improved communication within the group, as ideas were presented with clearer justification.</p>
+              <p>From this, I learned that engineering design is not only about creating solutions, but about being able to defend them. A well-designed system must also be supported by well-reasoned arguments.</p>
+              <p>In future projects, I would apply this framework earlier in the design process to ensure that reasoning is consistently structured, particularly during concept selection and evaluation stages.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+               <div class="ctmf-img-slot"><img src="P1_toul1.jpeg" alt="Praxis I toulmin 1"></div>
+              <div class="ctmf-img-slot"><img src="P1_reframe2.jpeg" alt="Praxis I toulmin 2"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 3</span>
+          <div class="ctmf-box-title">CRAAP Test</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>The CRAAP Test guided how I evaluated information during the research phase of the project. Given the wide range of available sources on hinge mechanisms, materials, and existing product designs, it was necessary to assess which sources were reliable and relevant to the design context.</p>
+              <p>Throughout the research process, I applied the CRAAP criteria (Currency, Relevance, Authority, Accuracy, and Purpose), to filter and assess sources. This was particularly important when comparing technical articles, product specifications, and informal sources such as forums or design blogs.</p>
+              <p>For example, while some sources provided interesting design ideas, they lacked credibility or detailed technical backing. Applying the CRAAP test helped identify whether the information was supported by expertise or data, and whether it was applicable to the specific constraints of the project.</p>
+              <p>This process influenced the quality of information used in decision-making. By prioritizing sources that were current, technically accurate, and relevant to the problem, I was able to ground design choices in more reliable evidence.</p>
+              <p>One key realization was that research is not simply about gathering information, but about critically evaluating it. Weak or biased sources can lead to flawed assumptions, which can propagate through the design process.</p>
+              <p>In future work, I would expand this approach by combining source evaluation with cross-referencing multiple sources to strengthen confidence in the information used.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="P1_sources.jpeg" alt="CRAAP1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctmf-page-section">
+      <span class="s-label">Project 02</span>
+      <h2 class="s-title">Praxis II</h2>
+      <div class="ctmf-page-grid">
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 4</span>
+          <div class="ctmf-box-title">Pairwise Comparison</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>The pairwise comparison method played a central role in how we converged on design decisions across each subsystem of the wristband application system. Rather than evaluating the system as a whole, we approached convergence at the level of individual functions, including the application mechanism, buttoning mechanism, cutting mechanism, sensing, and child engagement. This allowed us to make more precise and informed decisions within each part of the system.</p>
+              <p>For each subsystem, we compared design options directly against one another, evaluating which option better satisfied key requirements such as child engagement, time efficiency, safety, and staff interaction. For example, in the cutting mechanism, we compared scissors, a razor blade, and a laser system. Through pairwise evaluation, it became clear that the razor blade outperformed the other options due to its simplicity, ease of maintenance, and lower risk of failure. Similarly, in the sensing subsystem, we compared a load cell, stepper motor, camera, and pressure sensor, ultimately selecting the pressure sensor because it provided sufficient accuracy while being significantly easier to integrate and more cost-effective.</p>
+              <p>This method helped expose trade-offs that were not immediately obvious. Some options performed well in one aspect but introduced complexity or reliability issues elsewhere. By comparing options directly, we were able to isolate these trade-offs and prioritize designs that performed consistently across multiple criteria rather than excelling in only one.</p>
+              <p>Through this, I learned that effective decision-making in engineering design requires breaking down complex systems into manageable parts and evaluating them systematically. Pairwise comparison allowed us to reduce complexity while maintaining rigor in our reasoning.</p>
+              <p>In future work, I would refine this approach by ensuring that evaluation criteria are more explicitly defined and, where appropriate, weighted to reflect their relative importance in the overall system.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="P2_pair1.jpeg" alt="Praxis II 1"></div>
+              <div class="ctmf-img-slot"><img src="P2_pair2.jpeg" alt="Praxis II 2"></div>
+              <div class="ctmf-img-slot"><img src="P2_pair3.jpeg" alt="Praxis II 3 "></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 5</span>
+          <div class="ctmf-box-title">Biomimicry</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>Biomimicry was used during the diverging phase to expand the range of possible solutions by drawing inspiration from natural systems. Rather than limiting ideation to conventional mechanical designs, this approach encouraged us to explore how biological systems solve similar problems related to gripping, wrapping, sensing, and rapid motion.</p>
+              <p>We examined a variety of natural analogies, including octopus tentacles, Venus flytraps, burdock plants, and snapping shrimp. Each of these systems demonstrated a specific functional capability that could be translated into our design. For example, octopus tentacles inspired the idea of flexible wrapping mechanisms that could conform to different wrist sizes, while the Venus flytrap informed concepts involving triggered closure based on sensing. Similarly, the burdock plant suggested passive fastening mechanisms that could reduce the need for active components.</p>
+              <p>This process significantly broadened the solution space. Ideas that would not have emerged through conventional brainstorming became viable design directions. For instance, the concept of a guided channel system, inspired by how natural systems direct movement and flow, contributed to the development of our final rail-based wrapping mechanism.</p>
+              <p>One key observation was that biomimicry does not translate directly into final designs, but instead provides concepts that can be adapted. Not all biologically inspired ideas were feasible within our constraints, but they served as valuable starting points that pushed the design beyond obvious solutions.</p>
+              <p>Through this, I learned hwo unconvetianl creatcity can have a space in design egngienrrign, with structured methods like biomimicry. It is not simply about generating ideas, but about expanding the way problems are approached.</p>
+              <p>In future work, I would apply biomimicry more intentionally by mapping specific biological functions to engineering requirements earlier in the design process, allowing for a more direct connection between inspiration and implementation.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="P2_bio.jpeg" alt="Praxis II"></div>
+              <div class="ctmf-img-slot"><img src="P2_octupus.avif" alt="Praxis II"></div>
+              <div class="ctmf-img-slot"><img src="P2_tenta.jpeg" alt="PII 3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 6</span>
+          <div class="ctmf-box-title">Functional Prototyping</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>Functional prototyping played a critical role in validating design decisions and understanding how different subsystems performed under real conditions. We worked with different types of engineering prototypes. We began with calculations to verify whether the system would meet time efficiency requirements. We then developed drawings and CAD models to visualize the design and understand spatial relationships. Finally, we built physical prototypes. Because our design was complex, building these prototypes allowed us to better visualize and understand how the different subsystems functioned and interacted.</p>
+              <p>Each prototype was designed to isolate and test a specific function. For example, we tested the wrapping mechanism using guided rails and rollers to evaluate whether the wristband could consistently form a loop around the wrist. Similarly, we tested the buttoning mechanism using a piston system to determine whether sufficient force could be applied reliably without exceeding safety limits.</p>
+              <p>These prototypes revealed discrepancies between expected and actual performance. Mechanisms that appeared effective in theory often encountered issues such as misalignment, inconsistent force application, or delays in operation. This required us to iterate on the designs, refining both the mechanisms and the way subsystems interacted.</p>
+              <p>An important observation was that system performance depended heavily on integration. Even when individual components functioned well independently, issues arose when they were combined. This reinforced the importance of testing not only individual functions, but also how they interact within the full system.</p>
+              <p>In future projects, I would aim to prototype earlier and more frequently, using testing as a continuous part of the design process rather than a final step.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="P2_zip.jpeg" alt="proto 1"></div>
+              <div class="ctmf-img-slot"><img src="P2_air.jpeg" alt="proto 2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctmf-page-section">
+      <span class="s-label">Project 03</span>
+      <h2 class="s-title">CIV Bridge Project</h2>
+      <div class="ctmf-page-grid">
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 7</span>
+          <div class="ctmf-box-title">Iteration</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>Iteration was a central component of the bridge design process, guiding how the structure evolved from an initial concept into a more optimized final design. Rather than developing a single design and refining it slightly, the process involved multiple cycles of analysis, evaluation, and modification, each addressing specific structural weaknesses.</p>
+              <p>In the early stages, initial designs revealed critical limitations, particularly in relation to failure modes such as buckling and insufficient load capacity. Using analytical calculations and modelling, we identified which components of the bridge were most vulnerable under the given loading conditions. Based on these observations, targeted modifications were made, such as increasing flange thickness, adjusting web height, and redistributing material to areas experiencing higher stress.</p>
+              <p>Each iteration was not arbitrary, but driven by evidence. Changes were tested through recalculating internal forces, stress distributions, and factors of safety, allowing us to evaluate whether the modification improved performance or introduced new issues. For example, increasing the height of the web improved the moment of inertia and bending resistance, but also introduced potential shear instability, requiring further refinement.</p>
+              <p>This iterative process highlighted that improving one aspect of a system often creates trade-offs in another. As a result, design decisions required balancing competing factors rather than optimizing a single parameter.</p>
+              <p>Through this, I learned that iteration in engineering is not simply repetition, but a structured process of refinement backed by analysis and evidence. Each cycle builds on previous insights, progressively improving the design. In future work, I would aim to incorporate iteration earlier and more efficiently by identifying key failure modes sooner, allowing for more targeted and effective design changes.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="civ_it1.jpeg" alt="civ it 1"></div>
+              <div class="ctmf-img-slot"><img src="civ_it2.jpeg" alt=" civ it 2"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 8</span>
+          <div class="ctmf-box-title">PIAA Model</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>The PIAA model provided a framework for understanding how design decisions were made throughout the bridge project. Rather than treating analysis as a purely technical process, this model emphasizes how engineers perceive information, interpret its meaning, assess possible responses, and take action.</p>
+              <p>In this project, the process began with perceiving structural behavior through calculations and diagrams, such as shear force and bending moment diagrams. These representations allowed us to identify where forces were concentrated and where potential failures might occur.</p>
+              <p>We then interpreted this information by linking the observed patterns to specific failure modes, such as flexural compression or shear buckling. This step required understanding not only the numerical results, but what they implied about the behavior of the structure.</p>
+              <p>Next, we assessed possible design changes by considering different ways to improve performance, such as modifying cross-sectional geometry, adding material, or redistributing structural elements. Each option was evaluated based on how effectively it addressed the identified issue while maintaining overall efficiency.</p>
+              <p>Finally, we acted by implementing the chosen design modification and re-evaluating its impact through further analysis.</p>
+              <p>One key observation was that errors or assumptions made early in the PIAA cycle could propagate through the design. For example, misinterpreting a critical stress region could lead to reinforcing the wrong part of the structure. This highlighted the importance of careful interpretation and validation at each stage.</p>
+              <p>Through this, I learned that engineering design is not just about applying formulas, but about making informed decisions through a structured process.</p>
+              <p>In future work, i would like to apply the PIAA model more consciuoly and make the process explicit and intentional.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="civ_group.jpeg" alt="civ pic"></div>
+              <div class="ctmf-img-slot"><img src="IMG_4813.JPG" alt="civ 2"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctmf-box">
+          <span class="ctmf-box-label">CTMF 9</span>
+          <div class="ctmf-box-title">Requirements &amp; Evaluation Criteria</div>
+          <div class="ctmf-box-body">
+            <div class="ctmf-box-text">
+              <p>Requirements and evaluation criteria played a fundamental role in guiding the design and assessment of the bridge. They defined what the structure needed to achieve and provided a basis for comparing different design iterations.</p>
+              <p>The primary requirement of the project was to maximize load capacity while adhering to strict material constraints, glue constarints and specified loading conditions. From this, informal evaluation criteria were developed to assess performance, including factor of safety, resistance to different failure modes, and material efficiency.</p>
+              <p>Throughout the design process, these criteria were used to evaluate each iteration of the bridge. Rather than making arbitrary changes, modifications were assessed based on whether they improved performance relative to these criteria. For example, increasing material in high-stress regions improved the factor of safety, but also needed to be balanced against material limitations.</p>
+              <p>One important observation was that requirements and criteria must be clearly defined and consistently applied. Without this, it becomes difficult to determine whether a design is actually improving or simply changing.</p>
+              <p>Additionally, the relationship between requirements and evaluation criteria became more apparent over time. While requirements define what must be achieved, criteria determine how well different solutions meet those requirements. This distinction helped structure the design process and provided clarity when making decisions.</p>
+              <p>Through this, I learned that well-defined requirements and criteria are essential for guiding design decisions and ensuring that improvements are meaningful. They transform design from a trial-and-error process into a structured and measurable one.</p>
+              <p>In future work, I would place greater emphasis on defining and refining evaluation criteria early in the process, ensuring that they capture all relevant aspects of performance.</p>
+            </div>
+            <div class="ctmf-box-imgs">
+              <div class="ctmf-img-slot"><img src="civ_EC1.jpeg" alt="civ pic"></div>
+              <div class="ctmf-img-slot"><img src="civ_EC2.jpeg" alt="civ 2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="footer-copy">© 2025 Bice Vercelli · Engineering Science, University of Toronto</span>
+    <div class="footer-btns">
+      <a class="btn btn-primary btn-sm" href="mailto:ver.bice@icloud.com">✉ Email Me</a>
+      <a class="btn btn-outline btn-sm" href="https://www.linkedin.com/in/bice-vercelli4" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var html = document.documentElement;
+function toggleTheme(){var dark=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',dark?'light':'dark');}
+if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){html.setAttribute('data-theme','dark');}
+var ALL=['home','position','projects','project','bridge','ctmfs','pdf'];
+function go(id){for(var i=0;i<ALL.length;i++){var el=document.getElementById('page-'+ALL[i]);if(el){if(ALL[i]===id){el.style.display='block';el.classList.add('active');}else{el.style.display='none';el.classList.remove('active');}}}var navIds=['home','position','projects','ctmfs'];for(var j=0;j<navIds.length;j++){var link=document.getElementById('nl-'+navIds[j]);if(link){var isActive=navIds[j]===id||(id==='project'&&navIds[j]==='projects')||(id==='bridge'&&navIds[j]==='projects');if(isActive){link.classList.add('active');}else{link.classList.remove('active');}}}window.scrollTo(0,0);}
+function imgBox(src,label,cls,caption,extraCls){var wrapClass='proj-fig'+(extraCls?' '+extraCls:'');if(src){return '<figure class="'+wrapClass+'"><div class="'+cls+'"><img src="'+src+'" alt="'+(label||'')+'"></div>'+(caption?'<figcaption class="proj-caption">'+caption+'</figcaption>':'')+'</figure>';}return '<figure class="'+wrapClass+'"><div class="'+cls+'"><div class="'+cls+'-ph"><div class="'+cls+'-lbl">'+(label||'Add photo')+'</div></div></div>'+(caption?'<figcaption class="proj-caption">'+caption+'</figcaption>':'')+'</figure>';}
+function renderContent(p){
+  var h='';
+  if(p.groupImg!==undefined&&p.groupImg){h+='<div class="proj-sec" style="margin-bottom:2rem;"><h3>Group Photo</h3><div class="proj-hero-img" style="aspect-ratio:16/9;"><img src="'+p.groupImg+'" alt="Group photo"></div></div>';}
+  if(p.onePager!==undefined||p.poster!==undefined){h+='<div class="proj-docs">';if(p.onePager!==undefined){h+='<a class="proj-doc-btn" href="'+(p.onePager||'#')+'" target="_blank"><span class="proj-doc-icon">📄</span><span><span class="proj-doc-label">One-Pager</span><span class="proj-doc-hint">View PDF →</span></span></a>';}if(p.poster!==undefined){h+='<a class="proj-doc-btn" href="'+(p.poster||'#')+'" target="_blank"><span class="proj-doc-icon">🖼️</span><span><span class="proj-doc-label">Project Poster</span><span class="proj-doc-hint">View PDF →</span></span></a>';}h+='</div>';}
+  h+='<div class="proj-sec"><h3>Overview</h3>'+p.overview+'</div>';
+  h+='<div class="proj-sec"><h3>Problem Framing</h3><div class="proj-split text-wide"><div><p><strong>Initial Problem</strong><br>'+p.problem.initial+'</p><p><strong>Reframed Problem</strong><br>'+p.problem.reframed+'</p>';
+  if(p.problem.constraints&&p.problem.constraints.length){h+='<p><strong>Constraints</strong></p><ul class="proj-constraint-list">';for(var i=0;i<p.problem.constraints.length;i++){h+='<li>'+p.problem.constraints[i]+'</li>';}h+='</ul>';}
+  h+='</div>'+imgBox(p.problem.img,'Problem framing image','proj-split-img',p.problem.imgCaption||'','proj-split-fig')+'</div>';
+  if(p.problem.stakeholders){h+='<p><strong>Stakeholders</strong></p><div class="proj-stakeholder-grid">';for(var k=0;k<p.problem.stakeholders.length;k++){var s=p.problem.stakeholders[k];h+='<div class="proj-stakeholder-card"><h4>'+s.type+'</h4><p>'+s.desc+'</p></div>';}h+='</div>';}
+  h+='</div>';
+  h+='<div class="proj-sec"><h3>Technical Process</h3>';
+  if(p.process.diverging){h+='<p><strong>Diverging</strong><br>'+p.process.diverging.text+'</p>';if(p.process.diverging.concepts&&p.process.diverging.concepts.length){h+='<ul class="proj-concept-list">';for(var c=0;c<p.process.diverging.concepts.length;c++){h+='<li>'+p.process.diverging.concepts[c]+'</li>';}h+='</ul>';}if(p.process.diverging.imgs&&p.process.diverging.imgs.length){var cols=p.process.diverging.imgs.length>=3?'cols-3':'cols-2';h+='<div class="proj-img-row '+cols+'">';for(var di=0;di<p.process.diverging.imgs.length;di++){h+=imgBox(p.process.diverging.imgs[di],'Concept '+(di+1),'proj-img-box',p.process.diverging.imgLabels?p.process.diverging.imgLabels[di]:'','');}h+='</div>';}}
+  if(p.process.converging){h+='<p><strong>Converging</strong><br>'+p.process.converging.text+'</p>';if(p.process.converging.imgs&&p.process.converging.imgs.length){var ccols=p.process.converging.imgs.length>=3?'cols-3':'cols-2';h+='<div class="proj-img-row '+ccols+'">';for(var ci=0;ci<p.process.converging.imgs.length;ci++){h+=imgBox(p.process.converging.imgs[ci],'Evaluation '+(ci+1),'proj-img-box',p.process.converging.imgLabels?p.process.converging.imgLabels[ci]:'','');}h+='</div>';}}
+  if(p.process.final){h+='<p><strong>Final Solution</strong><br>'+p.process.final.text+'</p>';if(p.process.final.iterations&&p.process.final.iterations.length){h+='<div class="proj-iterations">';for(var it=0;it<p.process.final.iterations.length;it++){var iter=p.process.final.iterations[it];h+='<div class="'+(iter.pass?'iter-row iter-pass':'iter-row iter-fail')+'"><span class="iter-badge">'+(iter.pass?'✅':'❌')+'</span><span class="iter-material">'+iter.material+'</span><span class="iter-result">'+iter.result+'</span></div>';}h+='</div>';}if(p.process.final.imgs&&p.process.final.imgs.length){var isSingleFinal=p.process.final.imgs.length===1;var fcols=p.process.final.imgs.length>=3?'cols-3':'cols-2';h+='<div class="proj-img-row '+(isSingleFinal?'':fcols)+'">';for(var fi=0;fi<p.process.final.imgs.length;fi++){h+=imgBox(p.process.final.imgs[fi],'Final prototype '+(fi+1),'proj-img-box',p.process.final.imgLabels?p.process.final.imgLabels[fi]:'',isSingleFinal?'large':'');}h+='</div>';}}
+  h+='</div>';
+  h+='<div class="proj-sec"><h3>Reflection</h3>';if(typeof p.reflection==='string'){h+='<div class="proj-reflection-quote"><p>'+p.reflection+'</p></div>';}else if(p.reflection&&p.reflection.length){for(var ri=0;ri<p.reflection.length;ri++){h+='<div class="proj-reflection-quote"><p>'+p.reflection[ri]+'</p></div>';}}h+='</div>';
+  if(p.showCTMFs!==false&&p.ctmfBoxes&&p.ctmfBoxes.length){h+='<div class="proj-sec"><h3>CTMFs</h3><div class="ctmf-page-grid">';for(var bi=0;bi<p.ctmfBoxes.length;bi++){var box=p.ctmfBoxes[bi];h+='<div class="ctmf-box"><span class="ctmf-box-label">'+box.phase+'</span><div class="ctmf-box-title">'+box.title+'</div><div class="ctmf-box-body"><div class="ctmf-box-text">'+box.content+'</div><div class="ctmf-box-imgs">';for(var ii=0;ii<(box.imgs?box.imgs.length:0);ii++){h+=imgBox(box.imgs[ii],box.imgLabels?box.imgLabels[ii]:'Photo','ctmf-img-slot',box.imgLabels?box.imgLabels[ii]:'','');}h+='</div></div></div>';}h+='</div></div>';}
+  return h;
+}
+var PROJECTS={
+  praxis1:{title:'Praxis I Project',subtitle:'The Wobble Dilemma: Rethinking Convertible Laptop Hinges',heroImg:'P1_force.jpeg',tags:['Human','Context','Framing'],role:'Design Team Member',year:'2025',dur:'8 Weeks',ctx:'ESC101',overview:'<p>This project focused on designing a hinge add-on (HAO) to improve screen stability in 2-in-1 convertible laptops during stylus-based writing. The solution was intended for first-year Engineering Science students who rely heavily on digital note-taking.</p><p>Convertible laptops offer flexibility between laptop and tablet modes, but existing hinge systems cannot resist typical stylus forces. This leads to screen wobble, reduced precision, and poor writing ergonomics. The project aimed to develop a compact, portable, and stable solution that improves writing performance without compromising usability or portability.</p>',problem:{img:'P1_reframe.jpeg',imgCaption:'This picture is showing our framing process.',initial:'The problem was initially framed broadly as: <em>“Improve laptop hinge performance.”</em> This framing was too vague and did not identify the specific failure point or user need.',reframed:'Through research and testing, the problem was refined to: <em>Design a hinge add-on that maintains stability under stylus forces (≈4.25 N) while supporting ergonomic writing angles between 20°–50°.</em>',constraints:['Must fit within a backpack-sized volume (35 × 25 × 14.5 cm)','Must weigh ≤ 300 g','Must attach in ≤ 60 seconds, ≤ 5 steps','Must withstand stylus force without exceeding 0.775 mm displacement'],stakeholders:[{type:'Primary',desc:'Engineering Science students using stylus-based laptops. Value: stability, ergonomics, portability.'},{type:'Secondary',desc:'Students in other disciplines and professionals. Value: reliability, usability, adaptability.'}]},process:{diverging:{text:'We generated multiple concepts using structured ideation techniques such as brainwriting and brainstorming. Each concept explored different ways to balance rigidity, adjustability, and portability.',concepts:['Bice Chair (fixed-angle support)','Syringe (hydraulic damping)','Ratchet mechanism','Electromagnetic hinge','Screw locking system'],imgs:['P1_morphchart.jpeg','P1_ brain.jpeg'],imgLabels:['This picture is a morph chart.','This picture shows brainwriting.']},converging:{text:'We used pairwise comparison matrices, Pugh charts, and engineering requirements to evaluate designs based on stability, weight, installation time, and volume. The syringe mechanism was selected because it provided the best stability and controlled motion.',imgs:['P1_MM.jpeg','P1_PC.jpeg'],imgLabels:['This is a measurement matrix between our final prototypes.','This is a Pugh chart.']},final:{text:'The final design used a syringe-based damping mechanism that resists motion using fluid flow, similar to real-world dampers. Finite Element Analysis (FEA) was used to test material performance under stylus force (~4.25 N).',iterations:[{material:'ABS Plastic',result:'1.355 mm displacement',pass:false},{material:'ABS-PC',result:'1.17 mm displacement',pass:false},{material:'Ferritic Stainless Steel',result:'0.021 mm displacement',pass:true}],imgs:['P1_final.jpeg'],imgLabels:['Final Praxis I prototype']}},reflection:['This project fundamentally changed how I approach engineering design. Initially, I focused on generating creative mechanisms and finding a working solution. However, through testing and iteration, I learned that a design is only as strong as the evidence supporting it.','FEA analysis revealed that intuitive material choices like plastic were insufficient, forcing a shift toward more rigorous engineering decision-making.','Observing how students adapted to unstable hinges highlighted that technical problems are often rooted in real-world interactions, not just mechanics.'],showCTMFs:false,ctmfBoxes:[{phase:'CTMF',title:'Pugh Chart',content:'<p>The Pugh Chart played a central role in how design decisions were made throughout the hinge add-on project. Rather than selecting a concept based on intuition or initial preference, this tool provided a structured way to evaluate multiple design directions against a consistent set of criteria.</p>',imgs:['P1_PC.jpeg','P1_MM.jpeg'],imgLabels:['Pugh chart','Measurement matrix']}]},
+  praxis2:{title:'Praxis II Project',subtitle:'SnapBuddy: Automated Wristband Application System',heroImg:'Praxis2_CAD.jpeg',groupImg:'P2_group.jpeg',onePager:'front.pdf',poster:'P2_poster.pdf',tags:['Systems','Integration','Testing'],role:'Design Team Member',year:'2026',dur:'12 Weeks',ctx:'ESC102',overview:'<p>This project focused on improving the wristband application process at a daycare during field trips. Currently, staff must apply wristbands manually, one-by-one, while also managing supervision, logistics, and safety. This creates a bottleneck that slows departure and increases workload. Our goal was to design a system that makes wristband application:</p><ul><li>faster</li><li>less demanding for staff</li><li>more comfortable for children</li></ul>',problem:{img:'P2opp.jpeg',initial:'Improve the wristband process in general.',reframed:'<p>Design an automated wristband applicator that:</p><ul><li>reduces staff workload (&lt; 6 steps)</li><li>applies wristbands in &lt; 22.7 seconds per child</li><li>ensures safe force interaction (~10 kPa)</li><li>focuses on child engagement and makes the process fun and engaging for the child</li></ul>',constraints:['Must use existing wristbands (no redesign)','Device must be portable (5.75–11.5 kg)'],stakeholders:[{type:'Primary',desc:'Daycare staff and children. Staff need a faster, simpler, and efficient application process, while children need a system that feels comfortable and engaging.'},{type:'Secondary',desc:'Daycare administration. They value efficiency, safety, and a practical system that supports smoother field trip preparation.'}]},process:{diverging:{text:'We used multiple structured ideation tools to generate and expand concepts. Brainwriting (6-3-5) produced a wide range of independent ideas, the morphological chart explored alternative solutions for each function such as sensing, wrapping, and fastening, and biomimicry inspired mechanisms such as an octopus tentacle for flexible wrapping and a Venus flytrap for sensor-triggered closure.',concepts:['Air-pressure systems','Clamp mechanisms','Tentacle-like arms','Zip-tie style systems'],imgs:['P2_air.jpeg','P2_CC.jpeg','P2_tenta.jpeg','P2_zip.jpeg']},converging:{text:'Through evaluation and safety considerations, we eliminated unsafe ideas such as exposed blades and prioritized safety, time efficiency, and minimal staff interaction. This narrowed the solution space to four key concepts: tentacle arm, air-wrap applicator, curved jaw clamp, and roller-based system.',imgs:['P2_conv.jpeg','P2_Req.jpeg']},final:{text:'To validate our design, we focused on testing critical system functions rather than the full device at once. Each prototype was built to isolate key uncertainties in performance. We tested different methods for guiding the wristband around the wrist, including curved track designs and flexible guiding paths. We tested the force applied to the wrist using a force sensor and load cell, which led to the integration of force-controlled tightening to ensure both safety and reliability. We also tested how subsystems interacted, including sensing, feeding, wrapping, and fastening. This revealed that delays and misalignment occurred when subsystems were developed independently, reinforcing the need for continuous iteration, an approach I will carry forward into future projects.',imgs:['Praxis2_CAD.jpeg']}},reflection:['Initially, I approached the problem as a purely mechanical task focused on speed and automation. Through iteration and testing, I realized that system performance is strongly influenced by how users, especially children, interact with the device.','Factors such as hand visibility, perceived safety, and comfort directly affect cooperation, which in turn impacts efficiency. This shifted my approach from optimizing only mechanical performance to designing a system that integrates human factors with technical functionality.','One of the most significant insights was recognizing that designing for efficiency alone is insufficient when working within real-world contexts. In the wristband applicator project, the system’s performance depended not only on mechanical reliability, but on how children interacted with it.','I also developed a stronger approach to working with complex systems. Early in the project, different components were explored somewhat independently, which led to misalignment during integration. Through iteration, we shifted toward developing subsystems in parallel and continuously refining how they interacted.'],showCTMFs:false},
+};
+var lastOrigin='projects';
+function showProject(id,origin){lastOrigin=origin||'projects';var p=PROJECTS[id];if(!p)return;document.getElementById('proj-title').textContent=p.title;var subEl=document.getElementById('proj-subtitle');subEl.textContent=p.subtitle||'';subEl.style.display=p.subtitle?'block':'none';var tagsHtml='';for(var i=0;i<p.tags.length;i++)tagsHtml+='<span class="tag" style="margin-right:.4rem">'+p.tags[i]+'</span>';document.getElementById('proj-tags').innerHTML=tagsHtml;var heroEl=document.getElementById('proj-hero-img');heroEl.innerHTML=p.heroImg?'<img src="'+p.heroImg+'" alt="'+p.title+'">':'<div class="proj-hero-ph"><div class="proj-img-lbl">Add hero image</div></div>';document.getElementById('pm-role').textContent=p.role;document.getElementById('pm-year').textContent=p.year;document.getElementById('pm-dur').textContent=p.dur;document.getElementById('pm-ctx').textContent=p.ctx;document.getElementById('proj-content').innerHTML=renderContent(p);document.getElementById('proj-back-btn').textContent=lastOrigin==='home'?'← Back to Home':'← Back to Projects';go('project');}
+function goBack(){go(lastOrigin);}
+</script>
+</body>
+</html>
